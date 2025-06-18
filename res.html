@@ -1,0 +1,476 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrayTrack - Resources</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Gascogne', serif;
+        }
+
+        body {
+            background: #F5F0EC;
+            color: #2C2624;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #2C2624;
+        }
+
+        .hero-inner {
+            position: relative;
+            width: 90%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            color: #F5F0EC;
+        }
+
+        h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .accent {
+            color: #C7A78B;
+        }
+
+        .hero-image {
+            position: relative;
+            height: 70vh;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .section {
+            padding: 10rem 5%;
+            position: relative;
+        }
+
+        .guides {
+            background: #F5F0EC;
+        }
+
+        .guides-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: #2C2624;
+        }
+
+        .guides-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .guide-item {
+            padding: 2rem;
+            border-top: 2px solid #C7A78B;
+        }
+
+        .guide-item h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: #2C2624;
+        }
+
+        .documentation {
+            background: #2C2624;
+            color: #F5F0EC;
+        }
+
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .doc-item {
+            padding: 2rem;
+            border-top: 1px solid rgba(199, 167, 139, 0.3);
+        }
+
+        .doc-item h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: #C7A78B;
+        }
+
+        .downloads {
+            text-align: center;
+        }
+
+        .download-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 4rem auto 0;
+        }
+
+        .download-item {
+            padding: 3rem;
+            border: 1px solid #C7A78B;
+            text-align: left;
+            cursor: pointer;
+            transform: translateY(5px);
+            transition: all 0.4s ease;
+        }
+        .download-item:hover{
+            transform: translateY(-5px);
+        }
+        .download-item h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: #2C2624;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-image {
+                height: 40vh;
+            }
+
+            .guides-grid,
+            .doc-grid,
+            .download-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            .section {
+                padding: 6rem 5%;
+            }
+        }
+        #back path{
+            stroke: white;
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero lazy-loader">
+        <a href="home.html" style="position: absolute; top: 5rem; left: 5rem;"><svg id="back"
+                xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
+                <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path>
+            </svg></a>
+        <div class="hero-inner lazy-loader">
+            <div class="hero-content">
+                <h1>Knowledge & <span class="accent">Resources</span></h1>
+                <p style="font-size: 1.2rem; opacity: 0.8;">Comprehensive guides and documentation for our stray dog
+                    welfare technology platform.</p>
+            </div>
+            <div class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <section class="section guides lazy-loader">
+        <div class="guides-content lazy-loader">
+            <h2>Implementation <span class="accent">Guides</span></h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Step-by-step instructions for implementing and utilizing
+                our technology solutions.</p>
+            <div class="guides-grid">
+                <div class="guide-item lazy-loader">
+                    <h3>QR System Setup</h3>
+                    <p style="margin-bottom: 2rem;">Complete guide to implementing the QR identification system, including best practices for tag
+                        placement and scanning procedures.</p>
+                    <ol>
+                        <li><strong>Generate QR Codes</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Use the integrated QR generation feature in the app to create a unique code for each registered dog.
+                                </li>
+                                <li>Link the QR code to the dog’s profile, which contains details like breed, vaccination status, and
+                                    last-seen location.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Tag Creation</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Print QR codes on durable, weather-resistant materials (laminated tags or metal plates).</li>
+                                <li>Include a visible identification number in case of scanner issues.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Tag Placement</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Attach the QR tag securely to a collar or harness. Ensure it is visible and easy to scan.</li>
+                                <li>Avoid sharp or uncomfortable edges to protect the dog from injury.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Scanning Best Practices</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Use a smartphone or scanner with the <em>Stray Track</em> app to read QR codes.</li>
+                                <li>Hold the device steady and ensure good lighting for a quick scan.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <ul>
+                        <li><strong>Maintenance and Troubleshooting</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Replace damaged or faded tags promptly.</li>
+                                <li>If scanning fails, manually enter the ID printed on the tag.</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </div>
+                <div class="guide-item lazy-loader">
+                    <h3>RFID Implementation</h3>
+                    <p style="margin-bottom: 2rem;">Technical documentation for RFID tracker installation, maintenance, and troubleshooting guides
+                        for common issues.</p>
+                    <ol>
+                        <li><strong>Chip Selection and Installation</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Choose biocompatible RFID chips designed for animals.</li>
+                                <li>Professional veterinarians should handle chip implantation between the shoulder blades.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Reader Setup</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Install RFID scanners at key locations like shelters or veterinary clinics.</li>
+                                <li>Ensure scanners are configured to read the frequency of the implanted chips.</li>
+                            </ul>
+                        </li>
+                        <li><strong>System Integration</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Link scanned RFID data to the <em>Stray Track</em> database for automatic profile updates.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <ul>
+                        <li><strong>Maintenance and Troubleshooting</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li><strong>Common Issues</strong>
+                                    <ul style="margin-left: 2rem;">
+                                        <li><em>Reader Fails to Detect Chip</em>: Check battery levels or replace the reader.</li>
+                                        <li><em>Data Mismatch</em>: Verify that the correct chip ID is registered in the system.</li>
+                                    </ul>
+                                </li>
+                                <li>Regularly test RFID readers and keep firmware updated.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+                <div class="guide-item lazy-loader">
+                    <h3>Data Management</h3>
+                    <p style="margin-bottom: 2rem;">Guidelines for managing dog profiles, updating information, and maintaining accurate records in
+                        the system.</p>
+                        <ol>
+                            <li><strong>Creating and Updating Profiles</strong>
+                                <ul style="margin-left: 3rem;">
+                                    <li>Include comprehensive details like breed, age, vaccination status, and last-seen location.</li>
+                                    <li>Use standardized data fields to maintain consistency.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Information Accuracy</strong>
+                                <ul style="margin-left: 3rem;">
+                                    <li>Verify data during field updates to reduce errors.</li>
+                                    <li>Periodically review profiles for outdated information and corrections.</li>
+                                </ul>
+                            </li>
+                            <li><strong>Database Backup and Security</strong>
+                                <ul style="margin-left: 3rem;">
+                                    <li>Schedule regular backups to prevent data loss.</li>
+                                    <li>Use secure authentication to restrict unauthorized access.</li>
+                                </ul>
+                            </li>
+                        </ol>
+                        <ul>
+                            <li><strong>Data Retention Policies</strong>
+                                <ul style="margin-left: 3rem;">
+                                    <li>Define timelines for retaining inactive or outdated records.</li>
+                                    <li>Archive rather than delete profiles to preserve historical data.</li>
+                                </ul>
+                            </li>
+                        </ul>
+
+                </div>
+                <div class="guide-item lazy-loader">
+                    <h3>Healthcare Integration</h3>
+                    <p style="margin-bottom: 2rem;">Instructions for connecting with veterinary systems and managing health records effectively.</p>
+                    <ol>
+                        <li><strong>System Connection</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Use APIs provided by veterinary systems or local databases to sync health records.</li>
+                                <li>Enable automatic updates for vaccination reminders and treatment notes.</li>
+                            </ul>
+                        </li>
+                        <li><strong>Adding Health Data to Profiles</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Store vaccination dates, deworming schedules, and sterilization status under each dog’s profile.</li>
+                                <li>Include an alert system for upcoming medical requirements.</li>
+                            </ul>
+                        </li>
+                    </ol>
+                    <ul>
+                        <li><strong>Managing Health Records</strong>
+                            <ul style="margin-left: 3rem;">
+                                <li>Assign roles and permissions for veterinarians to update health data.</li>
+                                <li>Ensure data confidentiality and compliance with local animal welfare regulations.</li>
+                            </ul>
+                        </li>
+                    </ul>
+
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section documentation">
+        <div class="doc-grid">
+            <div class="doc-item lazy-loader">
+                <h3>Technical Docs</h3>
+                <ol>
+                    <li><strong>System Architecture</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Provides an overview of the platform’s structure, including components like the front-end interface,
+                                back-end services, and database systems.</li>
+                            <li>Includes diagrams illustrating data flow and key module interactions.</li>
+                        </ul>
+                    </li>
+                    <li><strong>API References</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Describes endpoints for managing dog profiles, scanning QR codes, and syncing RFID data.</li>
+                            <li>Includes detailed request and response formats with code examples for common use cases.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Integration Specifications</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Guidelines for integrating with third-party veterinary systems or mapping services.</li>
+                            <li>Outlines authentication methods and error-handling protocols.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+            </div>
+            <div class="doc-item lazy-loader">
+                <h3>User Manuals</h3>
+                <ol>
+                    <li><strong>Caregiver Manual</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Steps for scanning QR tags and RFID chips to view dog information.</li>
+                            <li>Instructions for reporting a stray dog's location and condition.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Veterinarian Manual</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Guide to accessing and updating vaccination and treatment records.</li>
+                            <li>Procedures for linking health data to dog profiles.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Administrator Manual</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Managing user permissions, reviewing logs, and updating system settings.</li>
+                            <li>Instructions for maintaining data accuracy and running analytics.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+            </div>
+            <div class="doc-item lazy-loader">
+                <h3>Best Practices</h3>
+                <ol>
+                    <li><strong>System Utilization</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Regularly back up the database to avoid data loss.</li>
+                            <li>Use secure passwords and enable two-factor authentication for administrators.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Dog Care Management</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Ensure QR tags and RFID chips are securely attached and undamaged.</li>
+                            <li>Schedule routine health checks and vaccination updates.</li>
+                        </ul>
+                    </li>
+                    <li><strong>Data Maintenance</strong>
+                        <ul style="margin-left: 2rem;">
+                            <li>Periodically review and correct outdated or incomplete dog profiles.</li>
+                            <li>Archive records rather than deleting to maintain historical data integrity.</li>
+                        </ul>
+                    </li>
+                </ol>
+
+            </div>
+        </div>
+    </section>
+
+    <section class="section downloads">
+        <h2>Resource <span class="accent">Downloads</span></h2>
+        <div class="download-grid">
+            <div class="download-item">
+                <h3>Mobile Applications</h3>
+                <p>Download our mobile apps for iOS and Android platforms for on-the-go access to the system.</p>
+            </div>
+            <div class="download-item">
+                <h3>Offline Documentation</h3>
+                <p>Downloadable PDF versions of all documentation for offline reference.</p>
+            </div>
+        </div>
+    </section>
+
+        <script>
+            const lazyLoaders = document.querySelectorAll('.lazy-loader');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+
+            lazyLoaders.forEach(loader => {
+                observer.observe(loader);
+            });
+        </script>
+</body>
+
+</html>

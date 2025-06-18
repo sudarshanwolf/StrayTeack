@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrayTrack - QR Scanner</title>
+    <link rel="icon" href="./logo-logo.png" type="image/png">
+    <link rel="icon" href="./logo-logo.png" type="image/png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: system-ui, -apple-system, sans-serif;
+        }
+
+        /* Scanner Section Styles */
+        .scanner-section {
+            margin-top: 5rem;
+            padding: 2rem;
+            background: #F3F4F6;
+            min-height: 92vh;
+            border: 1px solid;
+            border-radius: 10px;
+        }
+
+        .scanner-container {
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .scanner-title {
+            font-size: 2.5rem;
+            color: #1F2937;
+            margin-bottom: 2rem;
+        }
+
+        .scanner-description {
+            color: #4B5563;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+
+        .scanner-frame {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            margin: 0 auto 2rem;
+            background: #000;
+            border-radius: 1rem;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+        }
+
+        .scanner-overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 250px;
+            height: 250px;
+            border: 2px solid #e33665;
+            border-radius: 1rem;
+        }
+
+        .scan-line {
+            position: absolute;
+            width: 100%;
+            height: 2px;
+            background: #e33665;
+            animation: scan 2s linear infinite;
+        }
+
+        @keyframes scan {
+            0% {
+                top: 0;
+            }
+
+            100% {
+                top: 100%;
+            }
+        }
+
+        .scanner-controls {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .scanner-btn {
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.2s;
+        }
+
+        .primary-btn {
+            background: #e33665;
+            color: white;
+            border: none;
+        }
+
+        .secondary-btn {
+            background: white;
+            border: 1px solid #D1D5DB;
+        }
+
+        .scanner-status {
+            padding: 1rem;
+            border-radius: 0.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            gap: 1rem;
+        }
+    .pet-card {
+      background: white;
+      border-radius: 30px;
+      box-shadow: 5px 5px 10px #d4c589,
+                  -5px -5px 10px #ffefb5;
+      padding: 2rem;
+      width: 400px;
+      overflow: hidden;
+      position: absolute;
+      align-self: center;
+    }
+
+    .pet-card::before {
+      content: "🐾";
+      position: absolute;
+      top: -20px;
+      right: -20px;
+      font-size: 100px;
+      opacity: 0.1;
+      transform: rotate(45deg);
+    }
+
+    .pet-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .pet-avatar {
+      width: 120px;
+      height: 120px;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      border-radius: 60% 40% 50% 50% / 60% 40% 60% 40%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1rem;
+      font-size: 3rem;
+      animation: wobble 4s ease-in-out infinite;
+    }
+
+    @keyframes wobble {
+      0%, 100% { border-radius: 60% 40% 50% 50% / 60% 40% 60% 40%; }
+      50% { border-radius: 40% 60% 40% 60% / 50% 50% 50% 50%; }
+    }
+
+    .pet-name {
+      margin: 0;
+      font-size: 2rem;
+      color: #e17055;
+      font-weight: bold;
+    }
+
+    .pet-id {
+      color: #636e72;
+      font-size: 0.9rem;
+      margin-top: 0.25rem;
+    }
+
+    .pet-info {
+      background: #fff9f0;
+      border-radius: 20px;
+      padding: 1.5rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .label {
+      color: #e17055;
+      font-weight: bold;
+      font-size: 0.9rem;
+    }
+
+    .value {
+      color: #2d3436;
+      font-size: 0.9rem;
+      text-align: left;
+    }
+
+    .status-badge {
+      display: inline-block;
+      padding: 0.25rem 0.75rem;
+      border-radius: 1rem;
+      font-size: 0.875rem;
+      background: #55efc4;
+      color: #00b894;
+    }
+
+    .contact-button {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 15px;
+      background: linear-gradient(45deg, #ff9a9e, #fad0c4);
+      color: white;
+      font-size: 1rem;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    .contact-button:hover {
+      transform: scale(1.02);
+    }
+
+    /* Navbar Styles */
+    .navbar {
+        position: fixed;
+        top: 0;
+        width: 100%;
+        background: white;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        height: 80px;
+    }
+
+    .nav-container {
+        margin: 0 auto;
+        padding: 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        max-width: 60rem;
+    }
+
+    .logo {
+        margin-top: 10px;
+    }
+
+    .logo img {
+        height: 35px;
+        width: auto;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+        gap: 2rem;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #2c2624;
+        font-weight: 500;
+        transition: color 0.3s ease;
+    }
+
+    .nav-links a:hover {
+        color: #c7a78b;
+    }
+
+    .get-involved-btn {
+        background: #2c2624;
+        color: white;
+        border: none;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background-color 0.3s ease;
+    }
+
+    .get-involved-btn:hover {
+        background: #c7a78b;
+    }
+
+    .scan-btn {
+        background: transparent;
+        color: #2c2624;
+        border: 1px solid #2c2624;
+        padding: 0.8rem 1.5rem;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: bold;
+        margin-right: -7rem;
+        transition: all 0.3s ease;
+    }
+
+    .scan-btn:hover {
+        background: rgba(44, 38, 36, 0.05);
+    }
+
+    .mobile-menu-btn {
+        display: none;
+        flex-direction: column;
+        gap: 6px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        padding: 5px;
+    }
+
+    .mobile-menu-btn span {
+        display: block;
+        width: 25px;
+        height: 3px;
+        background: #2c2624;
+        transition: 0.3s;
+    }
+    #scan-link {
+        display: none;
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+        }
+
+        .mobile-menu-btn {
+            display: flex;
+        }
+
+        .get-involved-btn, .scan-btn {
+            display: none;
+        }
+        #scan-link {
+            display: block;
+        }
+    }
+
+    .nav-links.active {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: 80px;
+        left: 0;
+        right: 0;
+        background: white;
+        padding: 1rem;
+        box-shadow: 0 2px 10px rgba(44, 38, 36, 0.1);
+        z-index: 1000;
+    }
+
+    .nav-links.active li {
+        padding: 1rem;
+        border-bottom: 1px solid rgba(44, 38, 36, 0.1);
+    }
+
+    .nav-links.active li:last-child {
+        border-bottom: none;
+    }
+    </style>
+    <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+    <header class="navbar">
+        <div class="nav-container">
+            <a href="home.html" class="logo">
+                <img src="logo.png" alt="StrayTrack Logo">
+            </a>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="about.html">About Us</a></li>
+                    <li><a href="tech.html">Technology</a></li>
+                    <li><a href="res.html">Resources</a></li>
+                    <li><a href="us.html">Contact Us</a></li>
+                    <li><a href="index.html" id="scan-link">Scan</a></li>
+                </ul>
+            </nav>
+            <button class="get-involved-btn">Get Involved</button>
+            <button class="mobile-menu-btn" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </header>
+    <script src="https://unpkg.com/quagga/dist/quagga.min.js"></script>
+    
+    <!-- Import Instascan -->
+    <script src="https://rawgit.com/schmich/instascan-builds/master/instascan.min.js"></script>
+    
+    <!-- Scanner Section -->
+    <div style="display: flex; justify-content: center;">
+        <main class="scanner-section" style="max-width: 550px;">
+            <div class="scanner-container">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 10px;">
+                    <img src="logo.png" height="35px" alt="">
+                    <h1 class="scanner-title" style="font-size: 2.2rem; margin-bottom: 5px;">Scanner</h1>
+                </div>
+                <p class="scanner-description" style="text-align: left;">
+                    Use our QR code scanner to quickly access information about stray dogs in your area.
+                    Simply point your camera at a StrayTrack QR code tag to get started.
+                </p>
+    
+                <div class="scanner-frame">
+                    <video id="qr-preview" style="width: 100%; height: auto;"></video>
+                </div>
+    
+                <div class="scanner-controls" >
+                    <button class="scanner-btn primary-btn" id="startCamera" style="padding: 15px; background: #2C2624;">
+                        <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                        </svg>
+                        Start Camera
+                    </button>
+                    <button class="scanner-btn secondary-btn" id="stopCamera" style="padding: 15px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                            style="fill: rgba(0, 0, 0, 1);">
+                            <path d="M8.014 12.135c.074 2.062 1.789 3.777 3.851 3.851l-3.851-3.851z"></path>
+                            <path
+                                d="M4 20h11.879l-2-2H4V8.121L2.144 6.265A1.976 1.976 0 0 0 2 7v11c0 1.103.897 2 2 2zM20 5h-2.586l-2.707-2.707A.996.996 0 0 0 14 2h-4a.997.997 0 0 0-.707.293L6.586 5h-.172L3.707 2.293 2.293 3.707l18 18 1.414-1.414-.626-.626A1.98 1.98 0 0 0 22 18V7c0-1.103-.897-2-2-2zm-6.081 7.505-2.424-2.425c.163-.046.331-.08.505-.08 1.065 0 2 .935 2 2 0 .174-.033.342-.081.505zm1.502 1.501A3.881 3.881 0 0 0 16 12c0-2.168-1.832-4-4-4-.729 0-1.412.22-2.007.579L7.914 6.5l2.5-2.5h3.172l2.707 2.707A.996.996 0 0 0 17 7l3-.001V18h-.586l-3.993-3.994z">
+                            </path>
+                        </svg>
+                        Stop Camera
+                    </button>
+                    <button class="scanner-btn secondary-btn" id="flipCamera" style="padding: 15px;">
+                        <svg xmlns="http://www.w3.org/2000/svg" style="height: 15px;"
+                            viewBox="0 0 640 512"><!--!Font Awesome Free 6.7.2 by @fontawesome - https://fontawesome.com License - https://fontawesome.com/license/free Copyright 2025 Fonticons, Inc.-->
+                            <path
+                                d="M213.1 64.8L202.7 96 128 96c-35.3 0-64 28.7-64 64l0 256c0 35.3 28.7 64 64 64l384 0c35.3 0 64-28.7 64-64l0-256c0-35.3-28.7-64-64-64l-74.7 0L426.9 64.8C420.4 45.2 402.1 32 381.4 32L258.6 32c-20.7 0-39 13.2-45.5 32.8zM448 256c0 8.8-7.2 16-16 16l-76.7 0c-6.2 0-11.3-5.1-11.3-11.3c0-3 1.2-5.9 3.3-8L371 229c-13.6-13.4-31.9-21-51-21c-19.2 0-37.7 7.6-51.3 21.3L249 249c-9.4 9.4-24.6 9.4-33.9 0s-9.4-24.6 0-33.9l19.7-19.7C257.4 172.7 288 160 320 160c31.8 0 62.4 12.6 85 35l23.7-23.7c2.1-2.1 5-3.3 8-3.3c6.2 0 11.3 5.1 11.3 11.3l0 76.7zM192 320c0-8.8 7.2-16 16-16l76.7 0c6.2 0 11.3 5.1 11.3 11.3c0 3-1.2 5.9-3.3 8L269 347c13.6 13.4 31.9 21 51 21c19.2 0 37.7-7.6 51.3-21.3L391 327c9.4-9.4 24.6-9.4 33.9 0s9.4 24.6 0 33.9l-19.7 19.7C382.6 403.3 352 416 320 416c-31.8 0-62.4-12.6-85-35l-23.7 23.7c-2.1 2.1-5 3.3-8 3.3c-6.2 0-11.3-5.1-11.3-11.3l0-76.7z" />
+                        </svg>
+                        Flip Camera
+                    </button>
+                </div>
+    
+                <div class="scanner-status">
+                    <input type="text" name="" id="manual_id" placeholder="Enter DogID to get data" style="padding: 15px;width: 100%;border-radius: 5px; border: 1px solid;" required>
+                    <input type="submit" value="Get" style="padding: 10px; border-radius: 5px; cursor: pointer; width: 18%; border: 1px solid black;" id="get_manual_data">
+                </div>
+
+                <div class="pet-card" style="display: none;">
+                    <span style="position: absolute;left: 30px; cursor: pointer;" onclick="document.querySelector('.pet-card').style.display = 'none';"><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                        style="fill: rgba(0, 0, 0, 1);">
+                        <path
+                            d="m16.192 6.344-4.243 4.242-4.242-4.242-1.414 1.414L10.535 12l-4.242 4.242 1.414 1.414 4.242-4.242 4.243 4.242 1.414-1.414L13.364 12l4.242-4.242z">
+                        </path>
+                    </svg></span>
+                    <div class="pet-header">
+                        <div class="pet-avatar">🐕</div>
+                        <div class="div"></div>
+                        <h2 class="pet-name"></h2>
+                        <div class="pet-id">ID: </div>
+                    </div>
+                
+                    <div class="pet-info">
+                        
+                        <div class="label">Location:</div>
+                        <div class="value" id="location"></div>
+                        
+                        <div class="label">Last Seen:</div>
+                        <div class="value" id="last-seen"></div>
+                        
+                        <div class="label">Vaccinated:</div>
+                        <div class="value" id="vaccinated"><span class="status-badge"></span></div>
+                        
+                        <div class="label">Owner:</div>
+                        <div class="value" id="owner"></div>
+                        
+                        <div class="label">Owner Phone:</div>
+                        <div class="value" id="ownerContact"></div>
+                    </div>
+                    <button style="padding: 15px; width: 100%; display: none; background: #2C2624; color: white; border: none; border-radius: 8px; cursor: pointer; font-weight: 500; transition: background 0.3s ease;" id="getMoreInfo" onmouseover="this.style.background='#443c39'" onmouseout="this.style.background='#2C2624'">Get More Info</button>
+                    
+                    <!-- <button class="contact-button" onclick="contactOwner()">
+                        Contact Owner 🎉
+                    </button> -->
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-column">
+                <h2>Explore</h2>
+                <div class="footer-links">
+                    <a href="./about.html">About Us</a>
+                    <a href="./tech.html">Technology</a>
+                    <a href="./res.html">Resources</a>
+                </div>
+            </div>
+    
+            <div class="footer-column">
+                <h2>Connect</h2>
+                <div class="footer-links">
+                    <a href="./us.html">Contact Us</a>
+                </div>
+            </div>
+    
+            <div class="footer-column">
+                <h2>Support</h2>
+                <div class="footer-links">
+                    <a href="./us.html">Help</a>
+                </div>
+            </div>
+    
+            <div class="footer-column newsletter">
+                <h2>Stay Updated</h2>
+                <p>Subscribe to our newsletter for the latest updates on stray dog welfare and technology advancements.</p>
+                <form class="newsletter-form">
+                    <input type="email" placeholder="Enter your email" required>
+                    <button type="submit" style="border: 1px solid black; color: black;" onclick="event.preventDefault()">Subscribe</button>
+                </form>
+            </div>
+        </div>
+    
+        <div class="footer-bottom">
+            <div class="copyright">© 2025 StrayTrack. All rights reserved.</div>
+            <div class="legal-links">
+                <a href="#">Terms & Conditions</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+            <div class="social-links">
+                <a href="#" aria-label="Facebook"><i class="fab fa-facebook"></i></a>
+                <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAl7LSK_oJd1d8XgYeUsXXSQ2TrhyaN_AQ",
+            authDomain: "straydog-management.firebaseapp.com",
+            projectId: "straydog-management",
+            storageBucket: "straydog-management.firebasestorage.app",
+            messagingSenderId: "35656558047",
+            appId: "1:35656558047:web:dbfb4f5e7ba6cc0bbd106a",
+            measurementId: "G-RMCQT24DML"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        let currentCameraIndex = 0;
+        let availableCameras = [];
+
+        function closePetCard() {
+            document.querySelector('.pet-card').style.display = 'none';
+        }
+
+        async function fetchDogDetails(dogId) {
+            const petCard = document.querySelector('.pet-card');
+            petCard.style.display = 'block';
+
+            // Show loading message
+            document.querySelector('.pet-name').textContent = "Fetching...";
+            document.querySelector('.pet-id').textContent = `ID: ${dogId}`;
+            document.querySelector('#location').textContent = "";
+            document.querySelector('#last-seen').textContent = "";
+            document.querySelector('#vaccinated .status-badge').textContent = "";
+            document.querySelector('#owner').textContent = "";
+            document.querySelector('#ownerContact').textContent = "";
+            document.querySelector('.pet-info').style.display = 'none'
+            try {
+                const dogsRef = collection(db, "dogDetails");
+                const q = query(dogsRef, where("DOGID", "==", dogId));
+                const querySnapshot = await getDocs(q);
+
+                if (querySnapshot.empty) {
+                    document.querySelector('.pet-name').textContent = "No dog found";
+                    return;
+                }
+                
+                querySnapshot.forEach((doc) => {
+                    const dog = doc.data();
+
+                    document.querySelector('.pet-info').style.display = 'grid'
+                    document.getElementById("getMoreInfo").style.display = 'block'
+                    document.getElementById("getMoreInfo").onclick = () => {
+                        setTimeout(() => {
+                            sessionStorage.setItem("dogId",dogId);
+                            window.open("./more-info.html","_blank");
+                        }, 500);
+                    }
+                    const image_url = dog.DogPicture;
+                    
+                    document.querySelector('.pet-avatar').style.display = 'none';
+                    document.querySelector('.div').innerHTML = `<img src=${image_url} style="animation: wobble 4s ease-in-out infinite; width: 120px; height: 120px;       border-radius: 60% 40% 50% 50% / 60% 40% 60% 40%;" >` || '🐕';
+                    document.querySelector('.pet-name').textContent = dog.Name || "N/A";
+                    document.querySelector('.pet-id').textContent = `ID: ${dog.DOGID || "N/A"}`;
+                    document.querySelector('#location').textContent = dog.Location || "N/A";
+                    document.querySelector('#last-seen').textContent = dog.LastSeen || "N/A";
+                    document.querySelector('#owner').textContent = dog.Owner || "N/A";
+                    document.querySelector('#ownerContact').textContent = dog.OwnerContact || "N/A";
+
+                    // Update vaccinated status
+                    const vaccinatedStatus = (dog.Vaccinated || "No").trim().toLowerCase() === 'yes' ? 'Yes ✓' : 'No ✘';
+                    const badge = document.querySelector('#vaccinated .status-badge');
+
+                    if (vaccinatedStatus === "No ✘") {
+                        badge.style.background = '#ef233c';
+                        badge.style.color = '#ffffff';
+                    } else {
+                        badge.style.background = '#55efc4';
+                        badge.style.color = '#00b894';
+                    }
+                    badge.textContent = vaccinatedStatus;
+                });
+
+            } catch (error) {
+                console.error("Error fetching dog details:", error);
+            document.querySelector('.pet-info').style.display = 'none'
+                document.querySelector('.pet-name').textContent = "Error fetching data";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", () => {
+            const queryParams = new URLSearchParams(window.location.search);
+            const dogId = queryParams.get('dogId');
+
+            if (dogId) {
+                document.getElementById("manual_id").value = dogId;
+                setTimeout(() => {
+                    document.getElementById("get_manual_data").click();
+                }, 1000);
+            } else {
+                
+            }
+            let scanner = new Instascan.Scanner({ video: document.getElementById('qr-preview') });
+
+            scanner.addListener('scan', (dogId) => {
+                console.log(dogId)
+                dogId = dogId.split('=')[1]
+                scanner.stop().then(() => {
+                }).catch((err) => {
+                    console.error("Error stopping scanner: ", err);
+                });
+
+                // Fetch dog details from Firebase
+                fetchDogDetails(dogId);
+            });
+            document.getElementById("get_manual_data").onclick = (e) => {
+                const input = document.getElementById('manual_id');
+                const vall = input.value.trim();
+                
+                if (!vall) {
+                    input.style.borderColor = '#e33665';
+                    return;
+                }
+                
+                input.style.borderColor = '#000';
+                fetchDogDetails(vall);
+            }
+            document.getElementById('startCamera').addEventListener('click', () => {
+                Instascan.Camera.getCameras().then((cameras) => {
+                    availableCameras = cameras;
+                    if (availableCameras.length > 0) {
+                        scanner.start(availableCameras[currentCameraIndex]).then(() => {}).catch((err) => {
+                            console.error("Error starting scanner: ", err);
+                        });
+                    } else {
+                        alert('No cameras found.');
+                    }
+                }).catch((err) => {
+                    console.error("Camera error: ", err);
+                });
+            });
+
+            document.getElementById("stopCamera").addEventListener('click', () => {
+                scanner.stop().then(() => {}).catch((err) => {
+                    console.error("Error stopping camera: ", err);
+                });
+            });
+
+            document.getElementById("flipCamera").addEventListener('click', () => {
+                if (availableCameras.length > 1) {
+                    currentCameraIndex = (currentCameraIndex + 1) % availableCameras.length;
+                    scanner.start(availableCameras[currentCameraIndex]).then(() => {}).catch((err) => {
+                        console.error("Error starting scanner: ", err);
+                    });
+                } else {
+                    alert('No additional cameras found.');
+                }
+            });
+        });
+
+        function contactOwner() {
+            const ownerContact = document.getElementById('ownerContact').textContent;
+            if (ownerContact) {
+                window.location.href = `tel:${ownerContact}`;
+            } else {
+                alert('Owner contact not available!');
+            }
+        }
+    </script>
+    <script>
+        document.querySelector('.mobile-menu-btn').addEventListener('click', function() {
+            document.querySelector('.nav-links').classList.toggle('active');
+        });
+    </script>
+</body>
+
+</html>

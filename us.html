@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrayTrack - Contact Us</title>
+    <link rel="icon" href="./logo-logo.png" type="image/png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Gascogne', serif;
+        }
+
+        body {
+            background: #F5F0EC;
+            color: #2C2624;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #2C2624;
+        }
+
+        .hero-inner {
+            position: relative;
+            width: 90%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            color: #F5F0EC;
+        }
+
+        h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .accent {
+            color: #C7A78B;
+        }
+
+        .hero-image {
+            position: relative;
+            height: 70vh;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .section {
+            padding: 10rem 5%;
+            position: relative;
+        }
+
+        .contact-form {
+            background: #F5F0EC;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: start;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h2 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: #2C2624;
+        }
+
+        .form-group {
+            margin-bottom: 2rem;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: #2C2624;
+            font-size: 1.1rem;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+            padding: 1rem;
+            border: 1px solid rgba(44, 38, 36, 0.2);
+            background: transparent;
+            color: #2C2624;
+            font-size: 1.1rem;
+            font-family: inherit;
+        }
+
+        textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        button {
+            padding: 1rem 2rem;
+            background: #2C2624;
+            color: #F5F0EC;
+            border: none;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: opacity 0.3s;
+        }
+
+        button:hover {
+            opacity: 0.9;
+        }
+
+        .contact-info {
+            background: #2C2624;
+            color: #F5F0EC;
+            text-align: center;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 4rem auto 0;
+        }
+
+        .info-item {
+            padding: 2rem;
+            border-top: 1px solid rgba(199, 167, 139, 0.3);
+        }
+
+        .info-item h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: #C7A78B;
+        }
+
+        .support {
+            text-align: center;
+        }
+
+        .support-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            max-width: 1200px;
+            margin: 4rem auto 0;
+        }
+
+        .support-item {
+            padding: 3rem;
+            border: 1px solid #C7A78B;
+            text-align: left;
+        }
+
+        .support-item h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: #2C2624;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-image {
+                height: 40vh;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .info-grid,
+            .support-grid {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            .section {
+                padding: 6rem 5%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <section class="hero lazy-loader">
+        <a href="home.html" style="position: absolute; top: 5rem; left: 5rem;"><svg id="back"
+                xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24" style="fill: rgb(255, 255, 255);">
+                <path style="stroke: white;" d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path>
+            </svg></a>
+        <div class="hero-inner">
+            <div class="hero-content">
+                <h1>Get in <span class="accent">Touch</span></h1>
+                <p style="font-size: 1.2rem; opacity: 0.8;">We're here to help you implement and optimize our stray dog
+                    welfare technology.</p>
+            </div>
+            <div class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="contact-form">
+            <div>
+                <h2>Send us a <span class="accent">Message</span></h2>
+                <form onsubmit="event.preventDefault(); sendEmail();">
+                    <div class="form-group">
+                        <label>Name</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Subject</label>
+                        <input type="text" id="subject" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Message</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    <button type="submit">Send Message</button>
+                </form>
+            </div>
+            <div>
+                <h2>Contact <span class="accent">Information</span></h2>
+                <div style="font-size: 1.2rem;">
+                    <p style="margin-bottom: 2rem;">Our team is available to assist you with implementation, support,
+                        and general inquiries about our technology solutions.</p>
+                    <p style="margin-bottom: 1rem;"><strong>Email:</strong> notsolvablehat@gmail.com</p>
+                    <p style="margin-bottom: 1rem;"><strong>Phone:</strong> +91 8884552955
+                </p>
+            </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        function sendEmail() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const subject = document.getElementById('subject').value;
+            const message = document.getElementById('message').value;
+
+            const mailtoLink = `mailto:notsolvablehat@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent('Name: ' + name + '\nEmail: ' + email + '\n\n' + message)}`;
+
+            window.location.href = mailtoLink;
+        }
+    </script>
+</body>
+</html>

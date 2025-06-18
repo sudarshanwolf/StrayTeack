@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrayTrack - Update Dog Info</title>
+    <link rel="icon" href="./logo-logo.png" type="image/png">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: #f0f2f5;
+            padding: 1.5rem;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 10vh auto;
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 1.5rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            outline: 1px dashed black;
+        }
+
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+            text-align: center;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f0f2f5;
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.75rem;
+        }
+
+        .form-group {
+            margin-bottom: 0.5rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: #4a5568;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.1);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        button {
+            background: #4299e1;
+            color: white;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            width: 100%;
+        }
+
+        button:hover {
+            background: #3182ce;
+        }
+
+        #preview {
+            max-width: 200px;
+            border-radius: 10px;
+            margin: 1rem 0;
+        }
+
+        .search-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1>
+            <a href="./index.html" class="logo" style="user-select: none; margin-right: 10px;">
+                <img src="logo.png" alt="" style="height: 2rem; user-select: none;">
+            </a>
+            Update Dog Information
+        </h1>
+
+        <div class="search-section">
+            <input type="text" id="searchDogId" placeholder="Enter Dog ID to search">
+            <button id="searchButton">Search</button>
+        </div>
+
+        <form id="updateForm" style="display: none;">
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="dogId">Dog ID</label>
+                    <input type="text" id="dogId" readonly>
+                </div>
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" placeholder="Dog's name" required>
+                </div>
+                <div class="form-group">
+                    <label for="breed">Breed</label>
+                    <input type="text" id="breed" placeholder="Breed" required>
+                </div>
+                <div class="form-group">
+                    <label for="color">Color</label>
+                    <input type="text" id="color" placeholder="Color" required>
+                </div>
+                <div class="form-group">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" placeholder="Age" required min="0" max="15">
+                </div>
+                <div class="form-group">
+                    <label for="location">Location</label>
+                    <input type="text" id="location" placeholder="Location" required>
+                </div>
+                <div class="form-group">
+                    <label for="lastSeen">Last Seen</label>
+                    <input type="date" id="lastSeen" required>
+                </div>
+                <div class="form-group">
+                    <label for="vaccinated">Vaccinated</label>
+                    <select id="vaccinated" required>
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="owner">Owner</label>
+                    <input type="text" id="owner" placeholder="Owner name" required>
+                </div>
+                <div class="form-group">
+                    <label for="ownerContact">Owner Contact</label>
+                    <input type="tel" id="ownerContact" placeholder="Contact number" required>
+                </div>
+                <div class="form-group">
+                    <label for="diseases">Diseases</label>
+                    <input type="text" id="diseases" placeholder="Enter 'None' if no diseases">
+                </div>
+                <div class="form-group">
+                    <label for="pic">Dog Picture</label>
+                    <input type="file" id="pic" accept="image/*" />
+                </div>
+                <div class="form-group">
+                    <label for="spayedNeutered">Spayed/Neutered</label>
+                    <select id="spayedNeutered">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="abcParticipant">ABC Program Participant</label>
+                    <select id="abcParticipant">
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="abcDate">ABC Program Date</label>
+                    <input type="date" id="abcDate">
+                </div>
+                <div class="form-group">
+                    <label for="abcClinic">ABC Clinic</label>
+                    <input type="text" id="abcClinic">
+                </div>
+                <div class="form-group">
+                    <label for="healthConditions">Health Conditions</label>
+                    <input type="text" id="healthConditions">
+                </div>
+                <div class="form-group">
+                    <label for="medications">Medications (comma-separated)</label>
+                    <input type="text" id="medications">
+                </div>
+            </div>
+            <img id="preview" src="" alt="Image Preview" style="display: none;" />
+            <div class="button-group">
+                <button type="submit">Update Dog Info</button>
+                <button type="button" id="cancelButton" style="background-color: #e53e3e;">Cancel</button>
+            </div>
+        </form>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+            import {
+                getFirestore,
+                collection,
+                query,
+                where,
+                getDocs,
+                doc,
+                updateDoc
+            } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+            import {
+                getStorage,
+                ref,
+                uploadBytes,
+                getDownloadURL
+            } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
+
+            const firebaseConfig = {
+                apiKey: "AIzaSyAl7LSK_oJd1d8XgYeUsXXSQ2TrhyaN_AQ",
+                authDomain: "straydog-management.firebaseapp.com",
+                projectId: "straydog-management",
+                storageBucket: "straydog-management.firebasestorage.app",
+                messagingSenderId: "35656558047",
+                appId: "1:35656558047:web:dbfb4f5e7ba6cc0bbd106a",
+                measurementId: "G-RMCQT24DML"
+            };
+
+            const app = initializeApp(firebaseConfig);
+            const db = getFirestore(app);
+
+            document.addEventListener('DOMContentLoaded', () => {
+                const searchButton = document.getElementById('searchButton');
+                const searchDogId = document.getElementById('searchDogId');
+                const updateForm = document.getElementById('updateForm');
+                const cancelButton = document.getElementById('cancelButton');
+                let currentDocumentId = null;
+
+                searchButton.addEventListener('click', async () => {
+                    const dogId = searchDogId.value.trim();
+                    if (!dogId) {
+                        alert('Please enter a Dog ID');
+                        return;
+                    }
+
+                    try {
+                        const q = query(collection(db, "dogDetails"), where("DOGID", "==", dogId));
+                        const querySnapshot = await getDocs(q);
+
+                        if (querySnapshot.empty) {
+                            alert('No dog found with this ID');
+                            return;
+                        }
+
+                        const docSnap = querySnapshot.docs[0];
+                        const data = docSnap.data();
+                        currentDocumentId = docSnap.id;
+
+                        // Populate all form fields
+                        document.getElementById('dogId').value = data.DOGID;
+                        document.getElementById('name').value = data.Name;
+                        document.getElementById('breed').value = data.Breed;
+                        document.getElementById('color').value = data.Color;
+                        document.getElementById('age').value = data.Age;
+                        document.getElementById('location').value = data.Location;
+                        document.getElementById('lastSeen').value = data.LastSeen;
+                        document.getElementById('vaccinated').value = data.Vaccinated;
+                        document.getElementById('owner').value = data.Owner;
+                        document.getElementById('ownerContact').value = data.OwnerContact;
+                        document.getElementById('diseases').value = data.Diseases || 'None';
+                        document.getElementById('spayedNeutered').value = data.SpayedNeutered || 'No';
+                        document.getElementById('abcParticipant').value = data.ABCParticipant || 'No';
+                        document.getElementById('abcDate').value = data.ABCDate || '';
+                        document.getElementById('abcClinic').value = data.ABCClinic || '';
+                        document.getElementById('healthConditions').value = data.HealthConditions || '';
+                        document.getElementById('medications').value = data.Medications || '';
+
+                        // Show preview of existing image
+                        const previewImage = document.getElementById('preview');
+                        if (data.DogPicture) {
+                            previewImage.src = data.DogPicture;
+                            previewImage.style.display = 'block';
+                        }
+
+                        updateForm.style.display = 'block';
+
+                    } catch (error) {
+                        console.error("Error searching for dog:", error);
+                        alert('Error searching for dog details');
+                    }
+                });
+
+                updateForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+
+                    if (!currentDocumentId) {
+                        alert('Please search for a dog first');
+                        return;
+                    }
+
+                    const picFile = document.getElementById('pic').files[0];
+                    let downloadURL = document.getElementById('preview').src;
+
+                    try {
+                        // Handle image upload if new image is selected
+                        if (picFile) {
+                            const formData = new FormData();
+                            formData.append("file", picFile);
+                            formData.append("upload_preset", "StrayTrack");
+
+                            const response = await fetch("https://api.cloudinary.com/v1_1/doexh0tnv/image/upload", {
+                                method: "POST",
+                                body: formData
+                            });
+
+                            const data = await response.json();
+
+                            if (!data.secure_url) {
+                                throw new Error("Cloudinary upload failed.");
+                            }
+
+                            downloadURL = data.secure_url;
+                        }
+
+                        // Update document with all fields
+                        const docRef = doc(db, "dogDetails", currentDocumentId);
+                        await updateDoc(docRef, {
+                            Name: document.getElementById('name').value,
+                            Breed: document.getElementById('breed').value,
+                            Color: document.getElementById('color').value,
+                            Age: document.getElementById('age').value,
+                            Location: document.getElementById('location').value,
+                            LastSeen: document.getElementById('lastSeen').value,
+                            Vaccinated: document.getElementById('vaccinated').value,
+                            Owner: document.getElementById('owner').value,
+                            OwnerContact: document.getElementById('ownerContact').value,
+                            Diseases: document.getElementById('diseases').value || "None",
+                            DogPicture: downloadURL,
+                            SpayedNeutered: document.getElementById('spayedNeutered').value,
+                            ABCParticipant: document.getElementById('abcParticipant').value,
+                            ABCDate: document.getElementById('abcDate').value,
+                            ABCClinic: document.getElementById('abcClinic').value,
+                            HealthConditions: document.getElementById('healthConditions').value,
+                            Medications: document.getElementById('medications').value,
+                            timestamp: new Date()
+                        });
+
+                        alert("Dog details successfully updated!");
+
+                    } catch (error) {
+                        console.error("Error updating dog details:", error);
+                        alert("Failed to update dog details.");
+                    }
+                });
+
+                // Cancel button functionality
+                cancelButton.addEventListener('click', () => {
+                    updateForm.style.display = 'none';
+                    searchDogId.value = '';
+                    updateForm.reset();
+                    document.getElementById('preview').style.display = 'none';
+                    currentDocumentId = null;
+                });
+
+                // Image preview for new upload
+                document.getElementById('pic').addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const previewImage = document.getElementById('preview');
+                            previewImage.style.display = 'block';
+                            previewImage.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+    </script>
+</body>
+
+</html>

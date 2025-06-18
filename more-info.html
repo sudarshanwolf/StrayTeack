@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dog Management System</title>
+    <link rel="icon" href="./logo-logo.png" type="image/png">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            min-height: 100vh;
+            color: #2d3748;
+        }
+
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 25%;
+            height: 100vh;
+            background: #1a1a1a;
+            color: white;
+            padding: 2rem;
+        }
+
+        .sidebar-header {
+            margin-bottom: 2rem;
+        }
+
+        .sidebar-header h1 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .sidebar-header p {
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+
+        .search-container {
+            background: #2d2d2d;
+            padding: 1.5rem;
+            border-radius: 12px;
+        }
+
+        .search-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .search-input {
+            padding: 0.75rem;
+            background: #3d3d3d;
+            border: 1px solid #4d4d4d;
+            border-radius: 8px;
+            color: white;
+            font-size: 0.9rem;
+        }
+
+        .search-input::placeholder {
+            color: #888;
+        }
+
+        .search-input:focus {
+            outline: none;
+            border-color: #6366f1;
+        }
+
+        .search-button {
+            padding: 0.75rem;
+            background: #6366f1;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: background 0.2s;
+        }
+
+        .search-button:hover {
+            background: #4f46e5;
+        }
+
+        .main-content {
+            margin-left: 26%;
+            padding: 2rem;
+        }
+
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            padding: 1rem;
+        }
+
+        .section {
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+            border: 1px solid black;
+        }
+
+        .section:hover {
+            transform: translateY(-2px);
+        }
+
+        .section-title {
+            padding: 1rem 1.5rem;
+            background: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+            font-weight: 600;
+            color: #4a5568;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-title::before {
+            content: '';
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            background: #6366f1;
+            border-radius: 50%;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-row {
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .field-name {
+            padding: 0.75rem 1.5rem;
+            color: #64748b;
+            font-size: 0.875rem;
+            font-weight: 500;
+            background: #f8fafc;
+            width: 50%;
+        }
+
+        .field-value {
+            padding: 0.75rem 1.5rem;
+            color: #1a202c;
+            font-size: 0.875rem;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 2rem;
+            color: #64748b;
+            grid-column: 1 / -1;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                position: static;
+                width: 100%;
+                height: auto;
+                padding: 1rem;
+            }
+
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+
+            .grid-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Loading animation */
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.5;
+            }
+        }
+
+        .search-button.loading {
+            animation: pulse 1.5s infinite;
+            background: #818cf8;
+        }
+
+        /* Scroll styling */
+        .main-content {
+            overflow-y: auto;
+            height: 100vh;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <h1>Dog Management</h1>
+            <p>Search and view dog information</p>
+        </div>
+        <div class="search-container">
+            <form id="searchForm" class="search-form">
+                <input type="text" id="dogId" class="search-input" placeholder="Enter Dog ID" required>
+                <button type="submit" class="search-button">Search</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="main-content">
+        <div id="dogInfo" class="grid-container"></div>
+    </div>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+        import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAl7LSK_oJd1d8XgYeUsXXSQ2TrhyaN_AQ",
+            authDomain: "straydog-management.firebaseapp.com",
+            projectId: "straydog-management",
+            storageBucket: "straydog-management.firebasestorage.app",
+            messagingSenderId: "35656558047",
+            appId: "1:35656558047:web:dbfb4f5e7ba6cc0bbd106a",
+            measurementId: "G-RMCQT24DML"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const sections = {
+            "Basic Information": ["DOGID", "Name", "Breed", "Color", "Age"],
+            "Contact Details": ["Owner", "OwnerContact", "Location", "LastSeen"],
+            "Health Status": ["Diseases", "Vaccinated", "SpayedNeutered", "HealthConditions"],
+            "Medical Info": ["Medications", "Dewormed", "FleaTickTreatment", "Allergies"],
+            "ABC Program": ["ABCProgramParticipant", "ABCDate", "ABCClinic"],
+            "Rescue Status": ["RescueStatus", "RescueOrganization", "FosterHistory"],
+            "Adoption Info": ["AdoptionReady", "AdoptionRequirements"],
+            "Location Data": ["GPSLocation", "FrequencyOfSightings", "Tagged", "MapLink"],
+            "Care Details": ["DietaryPreferences", "ExerciseNeeds"],
+            "Additional Info": ["ReasonForStray", "CommunityFeedback", "StatusUpdates", "LegalStatus"]
+        };
+
+        function formatFieldName(field) {
+            return field.replace(/([A-Z])/g, ' $1').trim();
+        }
+
+        function createSection(title, fields, data) {
+            const section = document.createElement('div');
+            section.className = 'section';
+
+            const titleElement = document.createElement('div');
+            titleElement.className = 'section-title';
+            titleElement.textContent = title;
+            section.appendChild(titleElement);
+
+            const table = document.createElement('table');
+            table.className = 'data-table';
+
+            fields.forEach(field => {
+                const row = document.createElement('tr');
+                row.className = 'data-row';
+
+                const nameCell = document.createElement('td');
+                nameCell.className = 'field-name';
+                nameCell.textContent = formatFieldName(field);
+
+                const valueCell = document.createElement('td');
+                valueCell.className = 'field-value';
+                const value = data[field];
+                valueCell.textContent = Array.isArray(value) ? value.join(', ') || 'N/A' : value || 'N/A';
+
+                row.appendChild(nameCell);
+                row.appendChild(valueCell);
+                table.appendChild(row);
+            });
+
+            section.appendChild(table);
+            return section;
+        }
+
+        document.getElementById('searchForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const dogId = document.getElementById('dogId').value.trim();
+            const button = document.querySelector('.search-button');
+
+            if (!dogId) {
+                alert('Please enter a valid Dog ID');
+                return;
+            }
+
+            button.classList.add('loading');
+            button.textContent = 'Searching...';
+
+            const q = query(collection(db, "dogDetails"), where("DOGID", "==", dogId));
+            const querySnapshot = await getDocs(q);
+
+            const dogInfo = document.getElementById('dogInfo');
+            dogInfo.innerHTML = '';
+
+            if (querySnapshot.empty) {
+                dogInfo.innerHTML = '<div class="empty-state">No dog found with this ID</div>';
+            } else {
+                querySnapshot.forEach((doc) => {
+                    const data = doc.data();
+                    Object.entries(sections).forEach(([title, fields]) => {
+                        const section = createSection(title, fields, data);
+                        dogInfo.appendChild(section);
+                    });
+                });
+            }
+
+            button.classList.remove('loading');
+            button.textContent = 'Search';
+        });
+        document.addEventListener("DOMContentLoaded", () => {
+                document.getElementById("dogId").value = sessionStorage.getItem("dogId");
+                document.querySelector(".search-button").click();
+            });
+    </script>
+</body>
+
+</html>

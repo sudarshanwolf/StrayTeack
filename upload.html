@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrayTrack QR Generator</title>
+    <link rel="icon" href="./logo-logo.png" type="image/png">
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+    
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            min-height: 100vh;
+            background: #f0f2f5;
+            padding: 1.5rem;
+            color: #333;
+        }
+    
+        .container {
+            max-width: 1200px;
+            /* Increased width to accommodate more fields */
+            margin: 10vh auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 1.5rem;
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            outline: 1px dashed black;
+        }
+    
+        h1 {
+            color: #1a1a1a;
+            margin-bottom: 1.25rem;
+            font-size: 1.5rem;
+            grid-column: 1 / -1;
+            padding-bottom: 0.75rem;
+            border-bottom: 2px solid #f0f2f5;
+        }
+    
+        .form-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            /* Changed to 3 columns */
+            gap: 0.75rem;
+        }
+    
+        .form-group {
+            margin-bottom: 0.5rem;
+        }
+    
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+    
+        label {
+            display: block;
+            margin-bottom: 0.25rem;
+            color: #4a5568;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+    
+        label[for="dogId"]+input,
+        label[for="name"]+input,
+        label[for="breed"]+input,
+        label[for="color"]+input,
+        label[for="age"]+input,
+        label[for="location"]+input,
+        label[for="lastSeen"]+input,
+        label[for="vaccinated"]+select,
+        label[for="owner"]+input,
+        label[for="ownerContact"]+input,
+        label[for="diseases"]+input,
+        label[for="pic"]+input {
+            border: 1.5px solid #924b3e;
+        }
+    
+        label:not([for="dogId"], [for="name"], [for="breed"], [for="color"],
+            [for="age"], [for="location"], [for="lastSeen"],
+            [for="vaccinated"], [for="owner"], [for="ownerContact"],
+            [for="diseases"], [for="pic"]) {
+            color: #718096;
+        }
+    
+        input,
+        select {
+            width: 100%;
+            padding: 0.5rem 0.75rem;
+            border: 1.5px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+    
+        input:focus,
+        select:focus {
+            outline: none;
+            border-color: #4299e1;
+            box-shadow: 0 0 0 2px rgba(66, 153, 225, 0.1);
+        }
+    
+        button {
+            background: #4299e1;
+            color: white;
+            padding: 0.6rem 1rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            width: 100%;
+            margin-top: 0.75rem;
+        }
+    
+        button:hover {
+            background: #3182ce;
+        }
+    
+        .qr-section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 1rem;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+    
+        #qrcode {
+            margin-top: 0.5rem;
+            border-radius: 8px;
+            padding: 0.5rem;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            height: 400px;
+            width: auto;
+            outline: 1px dashed;
+        }
+    
+        .qr-title {
+            font-size: 0.9rem;
+            color: #4a5568;
+            margin-bottom: 0.5rem;
+        }
+    
+        /* Optional Fields Separator */
+        .optional-separator {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            position: relative;
+        }
+    
+        .optional-separator hr {
+            border: 1px dashed #cbd5e0;
+        }
+    
+        .optional-separator span {
+            background: white;
+            padding: 0 10px;
+            color: #718096;
+            position: relative;
+            top: -10px;
+        }
+    
+        /* Responsive Design */
+        @media (max-width: 1024px) {
+            .form-grid {
+                grid-template-columns: repeat(2, 1fr);
+                /* 2 columns on smaller screens */
+            }
+        }
+    
+        @media (max-width: 768px) {
+            .container {
+                grid-template-columns: 1fr;
+                padding: 1rem;
+            }
+    
+            .form-grid {
+                grid-template-columns: 1fr;
+            }
+    
+            body {
+                padding: 0.75rem;
+            }
+    
+            h1 {
+                font-size: 1.25rem;
+            }
+        }
+    
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+    
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+    
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e0;
+            border-radius: 3px;
+        }
+    
+        ::placeholder {
+            color: #a0aec0;
+            font-size: 0.85rem;
+        }
+    
+        /* Image Preview */
+        #preview {
+            display: block;
+            max-width: 200px;
+            margin: 10px auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <h1 style="display: flex; justify-content: center; align-items: center;"><a href="./index.html" class="logo" style="user-select: none; margin-right: 10px; margin-top: 6px;"><img src="logo.png" alt=""
+                style="height: 2rem; user-select: none;"></a> QR Generator</h1>
+
+        <div class="form-section">
+            <form id="qrForm">
+                <div class="form-grid">
+                    <div class="form-group">
+                        <label for="dogId">Dog ID *</label>
+                        <input type="text" id="dogId" placeholder="Enter ID" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="name">Name *</label>
+                        <input type="text" id="name" placeholder="Dog's name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="breed">Breed *</label>
+                        <input type="text" id="breed" placeholder="Breed" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="color">Color *</label>
+                        <input type="text" id="color" placeholder="Color" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="age">Age *</label>
+                        <input type="number" id="age" placeholder="Age" required min="0" max="15">
+                    </div>
+                    <div class="form-group">
+                        <label for="location">Location *</label>
+                        <input type="text" id="location" placeholder="Location" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="lastSeen">Last Seen *</label>
+                        <input type="date" id="lastSeen" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="vaccinated">Vaccinated *</label>
+                        <select id="vaccinated" required>
+                            <option value="Yes">Yes</option>
+                            <option value="No">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="owner">Owner *</label>
+                        <input type="text" id="owner" placeholder="Owner name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="ownerContact">Owner Contact *</label>
+                        <input type="tel" id="ownerContact" placeholder="Contact number" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="diseases">Diseases *</label>
+                        <input type="text" id="diseases" placeholder="Enter 'None' if no diseases" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="pic">Dog Picture *</label>
+                        <input type="file" id="pic" accept="image/*" required />
+                    </div>
+
+                    <div class="form-group full-width" style="text-align: center; margin-top: 20px; margin-bottom: 20px;">
+                        <hr style="border: 1px dashed #cbd5e0;">
+                        <span style="background: white; padding: 0 10px; color: #718096; position: relative; top: -10px;">
+                            Optional Fields
+                        </span>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="spayedNeutered">ABC Status</label>
+                        <select id="spayedNeutered">
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="abcParticipant">ABC Program Participant</label>
+                        <select id="abcParticipant">
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="abcDate">ABC Date</label>
+                        <input type="date" id="abcDate">
+                    </div>
+                    <div class="form-group">
+                        <label for="abcClinic">ABC Clinic/NGO</label>
+                        <input type="text" id="abcClinic" placeholder="Name of clinic/NGO">
+                    </div>
+                    <div class="form-group">
+                        <label for="healthConditions">Health Conditions</label>
+                        <input type="text" id="healthConditions" placeholder="Chronic issues, skin allergies, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="medications">Medications</label>
+                        <input type="text" id="medications" placeholder="Separate with commas">
+                    </div>
+                    <div class="form-group">
+                        <label for="dewormed">Dewormed</label>
+                        <select id="dewormed">
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fleaTick">Flea/Tick Treatment</label>
+                        <select id="fleaTick">
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rescueStatus">Rescue Status</label>
+                        <select id="rescueStatus">
+                            <option value="">Select</option>
+                            <option value="Stray">Stray</option>
+                            <option value="Rehabilitated">Rehabilitated</option>
+                            <option value="Foster-needed">Foster Needed</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="rescueOrg">Rescue Organization</label>
+                        <input type="text" id="rescueOrg" placeholder="Organization name">
+                    </div>
+                    <div class="form-group">
+                        <label for="fosterHistory">Foster History</label>
+                        <input type="text" id="fosterHistory" placeholder="Separate with commas">
+                    </div>
+                    <div class="form-group">
+                        <label for="adoptionReady">Adoption Ready</label>
+                        <select id="adoptionReady">
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="adoptionRequirements">Adoption Requirements</label>
+                        <input type="text" id="adoptionRequirements" placeholder="Experience needed, etc.">
+                    </div>
+                    <div class="form-group">
+                        <label for="gpsLocation">GPS Location</label>
+                        <input type="text" id="gpsLocation" placeholder="Latitude, Longitude">
+                    </div>
+                    <div class="form-group">
+                        <label for="sightingFrequency">Frequency of Sightings</label>
+                        <select id="sightingFrequency">
+                            <option value="">Select</option>
+                            <option value="Daily">Daily</option>
+                            <option value="Weekly">Weekly</option>
+                            <option value="Monthly">Monthly</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="tagged">ID Tagged</label>
+                        <select id="tagged">
+                            <option value="">Select</option>
+                            <option value="true">Yes</option>
+                            <option value="false">No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="mapLink">Map Link</label>
+                        <input type="url" id="mapLink" placeholder="Google Maps URL">
+                    </div>
+                    <div class="form-group">
+                        <label for="dietaryPreferences">Dietary Preferences</label>
+                        <input type="text" id="dietaryPreferences" placeholder="Food preferences">
+                    </div>
+                    <div class="form-group">
+                        <label for="allergies">Allergies</label>
+                        <input type="text" id="allergies" placeholder="Separate with commas">
+                    </div>
+                    <div class="form-group">
+                        <label for="exerciseNeeds">Exercise Needs</label>
+                        <select id="exerciseNeeds">
+                            <option value="">Select</option>
+                            <option value="High">High</option>
+                            <option value="Moderate">Moderate</option>
+                            <option value="Low">Low</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="reasonForStray">Reason for Stray</label>
+                        <select id="reasonForStray">
+                            <option value="">Select</option>
+                            <option value="Abandoned">Abandoned</option>
+                            <option value="Lost">Lost</option>
+                            <option value="Born on streets">Born on streets</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="communityFeedback">Community Feedback</label>
+                        <input type="text" id="communityFeedback" placeholder="Reports from locals">
+                    </div>
+                    <div class="form-group">
+                        <label for="statusUpdates">Status Updates</label>
+                        <input type="text" id="statusUpdates" placeholder="Current status, separate multiple with commas">
+                    </div>
+                    <div class="form-group">
+                        <label for="legalStatus">Legal Status</label>
+                        <input type="text" id="legalStatus" placeholder="Any ownership disputes">
+                    </div>
+
+                </div>
+                <img id="preview" src="" alt="Image Preview" style="display: none; width: 200px; border-radius: 10px;" />
+                <button type="submit">Generate QR Code</button>
+            </form>
+        </div>
+
+        <div class="qr-section">
+            <div class="qr-title" style="position: relative; top: -20px;">Generated QR Code</div>
+            <canvas id="qrcode" width="400" height="400" style="position: relative; top: -20px;"></canvas>
+            <div style="display: flex; justify-content: space-between; gap: 2rem; position: relative; top: -20px;">
+                <button download>Download</button>
+                <button copy>Copy</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrious"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-firestore.js";
+    import { getStorage, ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-storage.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyAl7LSK_oJd1d8XgYeUsXXSQ2TrhyaN_AQ",
+        authDomain: "straydog-management.firebaseapp.com",
+        projectId: "straydog-management",
+        storageBucket: "straydog-management.firebasestorage.app",
+        messagingSenderId: "35656558047",
+        appId: "1:35656558047:web:dbfb4f5e7ba6cc0bbd106a",
+        measurementId: "G-RMCQT24DML"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const form = document.getElementById('qrForm');
+
+            const picFile = document.getElementById('pic').files[0];
+
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                const dogId = document.getElementById('dogId').value;
+                const name = document.getElementById('name').value;
+                const breed = document.getElementById('breed').value;
+                const color = document.getElementById('color').value;
+                const age = document.getElementById('age').value;
+                const location = document.getElementById('location').value;
+                const lastSeen = document.getElementById('lastSeen').value;
+                const vaccinated = document.getElementById('vaccinated').value;
+                const diseases = document.getElementById('diseases').value || "None";
+                const owner = document.getElementById('owner').value;
+                const ownerContact = document.getElementById('ownerContact').value;
+
+                const picFile = document.getElementById('pic').files[0];
+
+                if (!picFile) {
+                    alert("Please select an image.");
+                    return;
+                }
+
+                try {
+                    const formData = new FormData();
+                    formData.append("file", picFile);
+                    formData.append("upload_preset", "StrayTrack");
+
+                    const response = await fetch("https://api.cloudinary.com/v1_1/doexh0tnv/image/upload", {
+                        method: "POST",
+                        body: formData
+                    });
+
+                    const data = await response.json();
+
+                    if (!data.secure_url) {
+                        throw new Error("Cloudinary upload failed.");
+                    }
+
+                    const downloadURL = data.secure_url;
+
+                    const optionalFields = {
+                        SpayedNeutered: document.getElementById('spayedNeutered').value || null,
+                        ABCProgramParticipant: document.getElementById('abcParticipant').value || null,
+                        ABCDate: document.getElementById('abcDate').value || null,
+                        ABCClinic: document.getElementById('abcClinic').value || null,
+                        HealthConditions: document.getElementById('healthConditions').value || null,
+                        Medications: document.getElementById('medications').value ? document.getElementById('medications').value.split(',').map(item => item.trim()) : null,
+                        Dewormed: document.getElementById('dewormed').value || null,
+                        FleaTickTreatment: document.getElementById('fleaTick').value || null,
+                        RescueStatus: document.getElementById('rescueStatus').value || null,
+                        RescueOrganization: document.getElementById('rescueOrg').value || null,
+                        FosterHistory: document.getElementById('fosterHistory').value ? document.getElementById('fosterHistory').value.split(',').map(item => item.trim()) : null,
+                        AdoptionReady: document.getElementById('adoptionReady').value || null,
+                        AdoptionRequirements: document.getElementById('adoptionRequirements').value || null,
+                        GPSLocation: document.getElementById('gpsLocation').value || null,
+                        FrequencyOfSightings: document.getElementById('sightingFrequency').value || null,
+                        Tagged: document.getElementById('tagged').value || null,
+                        MapLink: document.getElementById('mapLink').value || null,
+                        DietaryPreferences: document.getElementById('dietaryPreferences').value || null,
+                        Allergies: document.getElementById('allergies').value ? document.getElementById('allergies').value.split(',').map(item => item.trim()) : null,
+                        ExerciseNeeds: document.getElementById('exerciseNeeds').value || null,
+                        ReasonForStray: document.getElementById('reasonForStray').value || null,
+                        CommunityFeedback: document.getElementById('communityFeedback').value || null,
+                        StatusUpdates: document.getElementById('statusUpdates').value ? document.getElementById('statusUpdates').value.split(',').map(item => item.trim()) : null,
+                        LegalStatus: document.getElementById('legalStatus').value || null
+                    };
+
+                    const detailedRef = await addDoc(collection(db, "dogDetails"), {
+                        DOGID: dogId,
+                        Name: name,
+                        Breed: breed,
+                        Color: color,
+                        Age: age,
+                        Owner: owner,
+                        OwnerContact: ownerContact,
+                        Location: location,
+                        LastSeen: lastSeen,
+                        Diseases: diseases,
+                        Vaccinated: vaccinated,
+                        DogPicture: downloadURL,
+                        ...optionalFields,
+                        timestamp: new Date()
+                    });
+
+
+                    console.log("Dog details added with ID:", detailedRef.id);
+                    alert("Dog details successfully added!");
+
+                } catch (error) {
+                    console.error("Error:", error);
+                    alert("Failed to upload image or save details.");
+                }
+            });
+    });
+    const form = document.getElementById('qrForm');
+        const canvas = document.getElementById('qrcode');
+        let qr = new QRious({
+            element: canvas,
+            size: 400,
+            background: '#ffffff',
+            foreground: '#000000',
+            level: 'H'
+        });
+
+        form.addEventListener('submit', (e) => {
+            e.preventDefault();
+
+            const qrData = `https://notsolvablehat.github.io/strayTrack/?dogId=${document.getElementById('dogId').value}`;
+            qr.value = qrData;
+
+            const logo = new Image();
+            logo.src = 'logo-logo.png';
+
+            logo.onload = () => {
+                const context = canvas.getContext('2d');
+                const logoSize = 400 * 0.14;
+                const centerX = (400 - logoSize) / 2;
+                const centerY = (400 - logoSize) / 2;
+                context.drawImage(logo, centerX, centerY, logoSize, logoSize);
+            };
+        });
+
+            const PADDING = 20;
+
+                function createPaddedCanvas() {
+                    const paddedCanvas = document.createElement('canvas');
+                    const ctx = paddedCanvas.getContext('2d');
+
+                    paddedCanvas.width = canvas.width + 2 * PADDING;
+                    paddedCanvas.height = canvas.height + 2 * PADDING + 40; 
+
+                    ctx.fillStyle = "#ffffff";
+                    ctx.fillRect(0, 0, paddedCanvas.width, paddedCanvas.height);
+
+                    ctx.drawImage(canvas, PADDING, PADDING);
+
+                    ctx.fillStyle = '#000000';
+                    ctx.font = '16px Arial';
+                    ctx.textAlign = 'center'; 
+                    const dogId = document.getElementById('dogId').value;   
+                    ctx.fillText('DOGID: ' + dogId, paddedCanvas.width / 2, paddedCanvas.height - 20);
+
+                    return paddedCanvas;
+                }
+
+            const downloadButton = document.querySelector('button[download]');
+            downloadButton.addEventListener('click', () => {
+                const paddedCanvas = createPaddedCanvas();
+                const dataUrl = paddedCanvas.toDataURL('image/png');
+
+                const link = document.createElement('a');
+                link.href = dataUrl;
+                link.download = 'qr-code.png';
+                link.click();
+            });
+
+            const copyButton = document.querySelector('button[copy]');
+            copyButton.addEventListener('click', async () => {
+                try {
+                    const paddedCanvas = createPaddedCanvas();
+                    const blob = await new Promise(resolve => paddedCanvas.toBlob(resolve, 'image/png'));
+
+                    const item = new ClipboardItem({ 'image/png': blob });
+                    await navigator.clipboard.write([item]);
+
+                } catch (err) {
+                    console.error('Failed to copy: ', err);
+                }
+            });
+             document.getElementById('pic').addEventListener('change', function (event) {
+                    const file = event.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            const previewImage = document.getElementById('preview');
+                            previewImage.style.display = 'block';
+                            previewImage.src = e.target.result;
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+
+</script>
+
+
+</body>
+
+</html>

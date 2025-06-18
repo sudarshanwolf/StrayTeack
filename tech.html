@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>StrayTrack - Technology</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Gascogne', serif;
+        }
+
+        body {
+            background: #F5F0EC;
+            color: #2C2624;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background: #2C2624;
+        }
+
+        .hero-inner {
+            position: relative;
+            width: 90%;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .hero-content {
+            color: #F5F0EC;
+        }
+
+        h1 {
+            font-size: 5rem;
+            line-height: 1.1;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            letter-spacing: -1px;
+        }
+
+        .accent {
+            color: #C7A78B;
+        }
+
+        .hero-image {
+            position: relative;
+            height: 70vh;
+            overflow: hidden;
+        }
+
+        .hero-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.9;
+        }
+
+        .section {
+            padding: 10rem 5%;
+            position: relative;
+        }
+
+        .technology {
+            background: #F5F0EC;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8rem;
+            align-items: center;
+        }
+
+        .tech-content h2 {
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+            font-weight: 300;
+            color: #2C2624;
+        }
+
+        .tech-image {
+            position: relative;
+            height: 80vh;
+        }
+
+        .tech-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .features {
+            background: #2C2624;
+            color: #F5F0EC;
+        }
+
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .feature {
+            padding: 2rem;
+            border-top: 1px solid rgba(199, 167, 139, 0.3);
+        }
+
+        .feature h3 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            font-weight: 300;
+            color: #C7A78B;
+        }
+
+        .tech-list {
+            margin-top: 4rem;
+        }
+
+        .tech-item {
+            margin-bottom: 2rem;
+            font-size: 1.2rem;
+            color: #2C2624;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .tech-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 12px;
+            width: 8px;
+            height: 8px;
+            background: #C7A78B;
+            border-radius: 50%;
+        }
+
+        .health-monitoring {
+            background: #F5F0EC;
+            text-align: center;
+        }
+
+        .health-content {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .health-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 4rem;
+            margin-top: 4rem;
+        }
+
+        .health-item {
+            text-align: left;
+            padding: 2rem;
+            border-top: 2px solid #C7A78B;
+        }
+
+        .integration {
+            background: #2C2624;
+            color: #F5F0EC;
+            text-align: center;
+        }
+
+        .integration-content {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .scroll-text {
+            position: fixed;
+            right: 2rem;
+            top: 50%;
+            transform: rotate(90deg);
+            transform-origin: right;
+            font-size: 0.9rem;
+            color: rgba(44, 38, 36, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .hero-image {
+                height: 40vh;
+            }
+
+            .technology {
+                grid-template-columns: 1fr;
+                gap: 4rem;
+            }
+
+            .tech-image {
+                height: 50vh;
+            }
+
+            .feature-grid,
+            .health-grid {
+                grid-template-columns: 1fr;
+            }
+
+            h1 {
+                font-size: 3.5rem;
+            }
+
+            .scroll-text {
+                display: none;
+            }
+        }
+        #back path{
+            stroke: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="scroll-text">Scroll to explore</div>
+
+    <section class="hero lazy-loader">
+        <a href="home.html" style="position: absolute; top: 5rem; left: 5rem;"><svg id="back" xmlns="http://www.w3.org/2000/svg" width="30" height="30" viewBox="0 0 24 24"
+            style="fill: rgb(255, 255, 255);">
+            <path d="M12.707 17.293 8.414 13H18v-2H8.414l4.293-4.293-1.414-1.414L4.586 12l6.707 6.707z"></path>
+        </svg></a>
+        <div class="hero-inner lazy-loader">
+            <div class="hero-content lazy-loader">
+                <h1>Redefining <span class="accent">Care</span> Through Technology</h1>
+                <p style="font-size: 1.2rem; opacity: 0.8;">A revolutionary approach to stray dog welfare, combining
+                    sophisticated tracking with compassionate care.</p>
+            </div>
+            <div class="hero-image">
+            </div>
+        </div>
+    </section>
+
+    <section class="section technology lazy-loader">
+        <div class="tech-content">
+            <h2>Smart Technology, <br>Compassionate Care</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">Our innovative tracking system combines QR identification
+                with RFID technology, creating a comprehensive care network for stray dogs.</p>
+            <div class="tech-list">
+                <div class="tech-item">Unique digital identity for each dog</div>
+                <div class="tech-item">Real-time location monitoring</div>
+                <div class="tech-item">Instant access to medical history</div>
+                <div class="tech-item">Emergency response system</div>
+            </div>
+        </div>
+        <div class="tech-image">
+            <img src="./Images/15.png" alt="Dog with tracking device" style="filter: grayscale(10%);">
+        </div>
+    </section>
+
+    <section class="section features lazy-loader">
+        <div class="feature-grid">
+            <div class="feature lazy-loader">
+                <h3>QR Identification</h3>
+                <p>Each dog carries a unique QR code that provides instant access to their complete profile. One scan
+                    reveals their identity, medical history, and special care requirements.</p>
+            </div>
+            <div class="feature lazy-loader">
+                <h3>RFID Tracking</h3>
+                <p>Advanced RFID technology enables real-time location monitoring, ensuring we can respond quickly to
+                    any situation and maintain a comprehensive understanding of movement patterns.</p>
+            </div>
+            <div class="feature lazy-loader">
+                <h3>Digital Profiles</h3>
+                <p>Comprehensive digital records maintain detailed information about each dog's history, medical needs,
+                    and behavioral patterns, ensuring personalized care.</p>
+            </div>
+            <div class="feature lazy-loader">
+                <h3>Connected Care</h3>
+                <p>Our integrated system connects caregivers, veterinarians, and volunteers, creating a collaborative
+                    network focused on the well-being of every dog.</p>
+            </div>
+        </div>
+    </section>
+
+    <section class="section health-monitoring lazy-loader">
+        <div class="health-content lazy-loader">
+            <h2 style="font-size: 50px; text-align: left; margin-bottom: 3rem;">Health Monitoring <span class="accent">System</span></h2>
+            <p style="font-size: 1.4rem; max-width: 600px; margin: 0; margin-bottom: 2rem; text-align: left;">Advanced health
+                tracking capabilities ensure timely medical care and preventive measures for every dog in our system.
+            </p>
+            <div class="health-grid">
+                <div class="health-item lazy-loader">
+                    <h3>Vaccination Tracking</h3>
+                    <p>Automated scheduling and reminders for vaccinations and booster shots, ensuring complete
+                        immunization coverage.</p>
+                </div>
+                <div class="health-item lazy-loader">
+                    <h3>Medical History</h3>
+                    <p>Detailed records of treatments, procedures, and medications, accessible to authorized veterinary
+                        professionals.</p>
+                </div>
+                <div class="health-item lazy-loader">
+                    <h3>Behavioral Analysis</h3>
+                    <p>Monitoring and documentation of behavioral patterns to ensure appropriate care and handling
+                        approaches.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="section integration lazy-loader" style="text-align: left;">
+        <div class="integration-content">
+            <h2 style="font-size: 50px; margin-bottom: 3rem;">System <span class="accent">Integration</span></h2>
+            <p style="font-size: 1.2rem; margin-bottom: 4rem;">Our platform seamlessly connects with existing animal
+                welfare systems and healthcare providers, creating a unified approach to stray dog care.</p>
+            <div class="tech-list" style="color: #F5F0EC;">
+                <div class="tech-item" style="color: #F5F0EC;">Integration with veterinary management systems</div>
+                <div class="tech-item" style="color: #F5F0EC;">Real-time data synchronization</div>
+                <div class="tech-item" style="color: #F5F0EC;">Automated alerts and notifications</div>
+                <div class="tech-item" style="color: #F5F0EC;">Cross-platform accessibility</div>
+            </div>
+        </div>
+    </section>
+    <script>
+        const lazyLoaders = document.querySelectorAll('.lazy-loader');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+        
+        lazyLoaders.forEach(loader => {
+            observer.observe(loader);
+        });
+    </script>
+</body>
+
+</html>
